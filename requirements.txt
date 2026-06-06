@@ -1,0 +1,18 @@
+# API
+requests
+python-dotenv
+
+# Kafka
+kafka-python
+
+# Snowflake
+snowflake-connector-python
+
+# dbt
+dbt-core==1.7.4
+dbt-snowflake==1.7.4
+
+# Streamlit
+streamlit
+pandas
+plotly
