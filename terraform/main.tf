@@ -2,16 +2,18 @@ terraform {
     required_providers {
       snowflake = {
         source  = "Snowflake-Labs/snowflake"
-        version = "~> 0.87"
+        version = "~> 0.100"
       }
     }
 }
 
 provider "snowflake" {
-    account  = var.snowflake_account
-    username = var.snowflake_user
-    password = var.snowflake_password
-    role     = "SYSADMIN"
+    organization_name = var.snowflake_organization
+    account_name      = var.snowflake_account
+    username          = var.snowflake_user
+    password          = var.snowflake_password
+    role              = "ACCOUNTADMIN"
+    warehouse         = "COMPUTE_WH"
 }
 
 resource "snowflake_warehouse" "wc2026_wh" {
@@ -41,20 +43,20 @@ resource "snowflake_schema" "analytics" {
 
 # ROLES
 
-resource "snowflake_role" "loader" {
+resource "snowflake_account_role" "loader" {
     name    = "LOADER"
     comment = "Loads raw data from Kafka Consumer into RAW schema"
 }
 
-resource "snowflake_role" "transformer" {
+resource "snowflake_account_role" "transformer" {
     name    = "TRANSFORMER"
     comment = "Loads dbt modelled data into ANALYTICS schema"
 }
 
 # LOADER Role Grants
 
-resource "snowflake_grant_privileges_to_role" "loader_warehouse" {
-  role_name  = snowflake_role.loader.name
+resource "snowflake_grant_privileges_to_account_role" "loader_warehouse" {
+  account_role_name  = snowflake_account_role.loader.name
   privileges = ["USAGE"]
   on_account_object {
     object_type = "WAREHOUSE"
@@ -62,8 +64,8 @@ resource "snowflake_grant_privileges_to_role" "loader_warehouse" {
   }
 }
 
-resource "snowflake_grant_privileges_to_role" "loader_database" {
-  role_name  = snowflake_role.loader.name
+resource "snowflake_grant_privileges_to_account_role" "loader_database" {
+  account_role_name  = snowflake_account_role.loader.name
   privileges = ["USAGE"]
   on_account_object {
     object_type = "DATABASE"
@@ -71,16 +73,16 @@ resource "snowflake_grant_privileges_to_role" "loader_database" {
   }
 }
 
-resource "snowflake_grant_privileges_to_role" "loader_raw_schema" {
-  role_name  = snowflake_role.loader.name
+resource "snowflake_grant_privileges_to_account_role" "loader_raw_schema" {
+  account_role_name  = snowflake_account_role.loader.name
   privileges = ["USAGE", "CREATE TABLE"]
   on_schema {
     schema_name = "\"${snowflake_database.wc2026.name}\".\"${snowflake_schema.raw.name}\""
   }
 }
 
-resource "snowflake_grant_privileges_to_role" "loader_raw_write" {
-  role_name  = snowflake_role.loader.name
+resource "snowflake_grant_privileges_to_account_role" "loader_raw_write" {
+  account_role_name  = snowflake_account_role.loader.name
   privileges = ["INSERT", "UPDATE", "SELECT"]
   on_schema_object {
     all {
@@ -92,8 +94,8 @@ resource "snowflake_grant_privileges_to_role" "loader_raw_write" {
 
 # TRANSFORMER Role Grants
 
-resource "snowflake_grant_privileges_to_role" "transformer_warehouse" {
-  role_name  = snowflake_role.transformer.name
+resource "snowflake_grant_privileges_to_account_role" "transformer_warehouse" {
+  account_role_name  = snowflake_account_role.transformer.name
   privileges = ["USAGE"]
   on_account_object {
     object_type = "WAREHOUSE"
@@ -101,8 +103,8 @@ resource "snowflake_grant_privileges_to_role" "transformer_warehouse" {
   }
 }
 
-resource "snowflake_grant_privileges_to_role" "transformer_database" {
-  role_name  = snowflake_role.transformer.name
+resource "snowflake_grant_privileges_to_account_role" "transformer_database" {
+  account_role_name  = snowflake_account_role.transformer.name
   privileges = ["USAGE"]
   on_account_object {
     object_type = "DATABASE"
@@ -110,16 +112,16 @@ resource "snowflake_grant_privileges_to_role" "transformer_database" {
   }
 }
 
-resource "snowflake_grant_privileges_to_role" "transformer_raw_schema" {
-  role_name  = snowflake_role.transformer.name
+resource "snowflake_grant_privileges_to_account_role" "transformer_raw_schema" {
+  account_role_name  = snowflake_account_role.transformer.name
   privileges = ["USAGE"]
   on_schema {
     schema_name = "\"${snowflake_database.wc2026.name}\".\"${snowflake_schema.raw.name}\""
   }
 }
 
-resource "snowflake_grant_privileges_to_role" "transformer_raw_read" {
-  role_name  = snowflake_role.transformer.name
+resource "snowflake_grant_privileges_to_account_role" "transformer_raw_read" {
+  account_role_name  = snowflake_account_role.transformer.name
   privileges = ["SELECT"]
   on_schema_object {
     all {
@@ -129,8 +131,8 @@ resource "snowflake_grant_privileges_to_role" "transformer_raw_read" {
   }
 }
 
-resource "snowflake_grant_privileges_to_role" "transformer_analytics_schema" {
-  role_name  = snowflake_role.transformer.name
+resource "snowflake_grant_privileges_to_account_role" "transformer_analytics_schema" {
+  account_role_name  = snowflake_account_role.transformer.name
   privileges = ["USAGE", "CREATE TABLE", "CREATE VIEW"]
   on_schema {
     schema_name = "\"${snowflake_database.wc2026.name}\".\"${snowflake_schema.analytics.name}\""

@@ -21,11 +21,11 @@ output "analytics_schema" {
 }
 
 output "loader_role" {
-    value       = snowflake_role.loader.name
+    value       = snowflake_account_role.loader.name
     description = "Role used by Kafka consumer"
 }
 
 output "transformer_role" {
-    value       = snowflake_role.transformer.name
+    value       = snowflake_account_role.transformer.name
     description = "Role used by dbt"
 }
