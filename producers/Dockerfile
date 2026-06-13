@@ -9,4 +9,4 @@ COPY producers/ ./producers/
 
 ENV PRODUCER_TYPE=matches_events
 
-CMD ["sh", "-c" "python producers/${PRODUCER_TYPE}_producer.py"]
+CMD ["sh", "-c", "python producers/${PRODUCER_TYPE}_producer.py"]

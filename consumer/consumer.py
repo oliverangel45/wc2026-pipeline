@@ -126,7 +126,7 @@ def create_consumer():
     try:
         consumer = KafkaConsumer(
             *TOPICS,
-            bootstap_servers=KAFKA_BOOTSTRAP_SERVERS,
+            bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
             group_id=KAFKA_GROUP_ID,
             auto_offset_reset='earliest',
             enable_auto_commit=False,

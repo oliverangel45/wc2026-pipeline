@@ -28,8 +28,8 @@ def create_producer():
     try:
         producer = KafkaProducer(
             bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS,
-            value_serializer=lambda v: json.dumps(v).encode('utf-8')
-            acks='all'
+            value_serializer=lambda v: json.dumps(v).encode('utf-8'),
+            acks='all',
             retries=3
         )
         logger.info("Kafka producer created successfully")

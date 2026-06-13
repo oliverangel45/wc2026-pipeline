@@ -27,18 +27,18 @@ services:
       retries: 5
       start_period: 30s
 
-  match-events-producer:
+  matches-events-producer:
     build: 
       context: .
       dockerfile: producers/Dockerfile
-    container_name: match-events-producer
+    container_name: matches-events-producer
     depends_on:
       broker:
         condition: service_healthy
     env_file:
       - .env
     environment:
-      PRODUCER_TYPE: match_events
+      PRODUCER_TYPE: matches_events
 
   standings-producer:
     build:
@@ -64,15 +64,16 @@ services:
     env_file:
       - .env
   
-  streamlit:
-    build:
-      context: .
-      dockerfile: streamlit_app/Dockerfile
-    container_name: streamlit
-    depends_on:
-      broker:
-        condition: service_healthy
-    ports:
-      - "8501:8501"
-    env_file:
-      - .env
+  # Will replace with grafana eventually
+  # streamlit:
+  #   build:
+  #     context: .
+  #     dockerfile: streamlit_app/Dockerfile
+  #   container_name: streamlit
+  #   depends_on:
+  #     broker:
+  #       condition: service_healthy
+  #   ports:
+  #     - "8501:8501"
+  #   env_file:
+  #     - .env
