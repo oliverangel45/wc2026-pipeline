@@ -1,8 +1,8 @@
-# WC2026 Data Pipeline (still in progress)
+# WC2026 Data Pipeline 🌍⚽🏆(still in progress)
  
 A real-time data engineering pipeline built to extract, load, transform (ELT) and visualise live FIFA World Cup 2026 data. The pipeline streams match results, group standings, and match events from the [football-data.org](https://www.football-data.org/) REST API through Apache Kafka into Snowflake, transforms the raw data with dbt, and surfaces it through a Grafana dashboard, all containerised within Docker Compose. 
 
-I would've loved to have used a Websocket API to have scores and match updates flow through to the grafana dashboard immediately, but chose against this due to the additonal incurred cost.
+I would've loved to have used a Websocket API to have scores and match updates flow through to the grafana dashboard immediately, but chose against this due to the additonal incurred cost 🫠
  
  
 ## Stack
