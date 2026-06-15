@@ -122,6 +122,7 @@ def send_events(producer, match_id, events):
 def main():
     logger.info("Starting matches/events producer")
     producer = create_producer()
+    fetched_event_match_ids = set()
 
     while True:
         try:
@@ -129,10 +130,20 @@ def main():
 
             for match in matches:
                 send_match(producer, match)
+                
+                match_id = match['id']
+                status = match['status']
 
-                if match['status'] in ['IN_PLAY', 'PAUSED', 'FINISHED']:
-                    events = fetch_events(match['id'])
-                    send_events(producer, match['id'], events)
+                if match['status'] in ['IN_PLAY', 'PAUSED']: # Removed 'FINISHED' matches sue to API polling limits
+                    events = fetch_events(match_id)
+                    send_events(producer, match_id, events)
+                    time.sleep(1)
+                    
+                elif status == 'FINISHED' and match_id not in fetched_event_match_ids:
+                    events = fetch_events(match_id)
+                    send_events(producer, match_id, events)
+                    fetched_event_match_ids.add(match_id)
+                    time.sleep(1)
 
             producer.flush()
             logger.info(f"Poll complete. Sleeping for {POLL_INTERVAL} seconds")

@@ -59,12 +59,11 @@ def insert_match(cursor, message):
                 HOME_SCORE, AWAY_SCORE, STATUS,
                 MATCHDAY, STAGE, UTC_DATE,
                 LAST_UPDATED, RAW_PAYLOAD
-            ) VALUES (
+            ) SELECT
                 %(match_id)s, %(home_team)s, %(away_team)s,
                 %(home_score)s, %(away_score)s, %(status)s,
                 %(matchday)s, %(stage)s, %(utc_date)s,
-                %(last_updated)s, PARSE_JSON(%(raw_payload)s)                
-            )
+                %(last_updated)s, PARSE_JSON(%(raw_payload)s)
         """
         message['raw_payload'] = json.dumps(message)
         cursor.execute(sql, message)
@@ -83,13 +82,12 @@ def insert_standing(cursor, message):
                 DRAW, LOST, POINTS,
                 GOALS_FOR, GOALS_AGAINST, GOAL_DIFF,
                 RAW_PAYLOAD
-            ) VALUES (
+            ) SELECT
                 %(team_id)s, %(team_name)s, %(group_name)s,
                 %(position)s, %(played_games)s, %(won)s,
                 %(draw)s, %(lost)s, %(points)s,
                 %(goals_for)s, %(goals_against)s, %(goal_diff)s,
                 PARSE_JSON(%(raw_payload)s)
-            )
         """
         message['raw_payload'] = json.dumps(message)
         cursor.execute(sql, message)
@@ -108,12 +106,11 @@ def insert_event(cursor, message):
                 EXTRA_TIME_MINUTE, EVENT_TYPE, EVENT_DETAIL,
                 TEAM_ID, TEAM_NAME, PLAYER_NAME,
                 ASSIST_NAME, RAW_PAYLOAD
-            ) VALUES (
+            ) SELECT
                 %(event_id)s, %(match_id)s, %(minute)s,
                 %(extra_time_minute)s, %(event_type)s, %(event_detail)s,
                 %(team_id)s, %(team_name)s, %(player_name)s,
                 %(assist_name)s, PARSE_JSON(%(raw_payload)s)
-            )
         """
         message['raw_payload'] = json.dumps(message)
         cursor.execute(sql, message)

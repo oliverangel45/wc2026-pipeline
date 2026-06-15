@@ -55,13 +55,13 @@ def fetch_standings():
         logger.info(f"Fetched standings for {len(standings)} teams")
         return standings
     except requests.exceptions.HTTPError as e:
-        logger.error(f"HTTP error fetching matches: {e}")
+        logger.error(f"HTTP error fetching standings: {e}")
         return []
     except requests.exceptions.ConnectionError as e:
-        logger.error(f"Connection error fetching matches: {e}")
+        logger.error(f"Connection error fetching standings: {e}")
         return []
     except Exception as e:
-        logger.error(f"Unexpected error fetching matches: {e}")
+        logger.error(f"Unexpected error fetching standings: {e}")
         return []
 
 def send_standing(producer, group_name, team_standing):
@@ -88,6 +88,10 @@ def send_standing(producer, group_name, team_standing):
     
 def main():
     logger.info("Starting standings producer")
+    
+    logger.info("Waiting 30 seconds before first poll to avoid API rate limiting")
+    time.sleep(30)
+    
     producer = create_producer()
     
     while True:
