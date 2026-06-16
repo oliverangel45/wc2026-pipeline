@@ -1,0 +1,25 @@
+name: 'wc2026'
+version: '1.0.0'
+config-version: 2
+
+profile: 'wc2026'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  wc2026:
+    staging:
+      +materialized: view
+      +schema: ANALYTICS
+    marts:
+      +materialized: incremental
+      +schema: ANALYTICS
