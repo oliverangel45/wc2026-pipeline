@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: wc2026_raw # dbt source group
+    database: WC2026
+    schema: RAW
+    description: "Raw data landed by kafka consumer from football-data.org API"
+    freshness:
+      warn_after: {count: 2, period: hour}
+      error_after: {count: 6, period: hour}
+
+    loaded_at_field: INGESTED_AT
+
+    tables:
+      - name: MATCHES
+        description: "Raw match data"
+        freshness:
+          warn_after: {count: 5, period: minute}
+          error_after: {count: 30, period: minute}
+
+      - name: STANDINGS
+        description: "Raw standings data"
+        freshness:
+          warn_after: {count: 10, period: minute}
+          error_after: {count: 60, period: minute}
+
+      - name: EVENTS
+        description: "Raw events data"
+        freshness: # Looser thresholds as there might not be any live matches therefore no match events
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 24, period: hour}
