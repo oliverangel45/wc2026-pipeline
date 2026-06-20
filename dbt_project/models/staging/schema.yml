@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_matches
+    description: "Deduplicated match data (one row per match)"
+    columns:
+      - name: MATCH_ID
+        description: "Unique match ID from source football-data.org"
+        tests:
+          - not_null
+          - unique
+      
+      - name: HOME_TEAM
+        description: "Home team name"
+        tests:
+          - not_null
+    
+      
+      - name: AWAY_TEAM
+        description: "Away team name"
+        tests:
+          - not_null
+      
+      - name: STAGE
+        description: "Tournement Stage"
+        tests:
+          - not_null
+      
+      - name: KICKOFF_TIME
+        description: "Scheduled KO time in UTC"
+        tests:
+          - not_null
+      
+      - name: STATUS
+        description: "Current match status"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['SCHEDULED', 'TIMED', 'IN_PLAY', 'PAUSED', 'FINISHED', 'POSTPONED', 'CANCELLED', 'AWARDED']
