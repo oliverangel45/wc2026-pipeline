@@ -37,3 +37,53 @@ models:
           - not_null
           - accepted_values:
               values: ['SCHEDULED', 'TIMED', 'IN_PLAY', 'PAUSED', 'FINISHED', 'POSTPONED', 'CANCELLED', 'AWARDED']
+  
+  - name: stg_standings
+    description: "Deduplicated standings data (one row per team with current position)"
+    columns:
+      - name: TEAM_ID
+        description: "Unique team ID from source football-data.org"
+        tests:
+          - not_null
+          - unique
+
+      - name: TEAM_NAME
+        description: "Team name"
+        tests:
+          - not_null
+      
+      - name: GROUP_NAME
+        description: "WC Group name"
+        tests:
+          - not_null
+
+      - name: POINTS
+        description: "Current Points total"
+        tests:
+          - not_null
+
+      - name: POSITION
+        description: "Current group position"
+        tests:
+          - not_null
+      
+  - name: stg_events
+    description: "Deduplicated match events - one row per unique event"
+    columns:
+      - name: EVENT_ID
+        description: "Composite unique identifier for each event"
+        tests:
+          - not_null
+          - unique
+
+      - name: MATCH_ID
+        description: "Match this event belongs to"
+        tests:
+          - not_null
+
+      - name: EVENT_TYPE
+        description: "Type of event"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['GOAL', 'YELLOW_CARD', 'RED_CARD', 'YELLOW_RED_CARD', 'SUBSTITUTION']
