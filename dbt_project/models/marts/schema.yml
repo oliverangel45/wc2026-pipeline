@@ -41,3 +41,98 @@ models:
         description: "Tournament stage"
         tests:
           - not_null
+      
+  - name: fct_top_scorers
+    description: "One row per player showing total goals scored"
+    columns:
+      - name: PLAYER_NAME
+        description: "Player name"
+        tests:
+          - not_null
+          - unique
+
+      - name: TEAM_NAME
+        description: "Team the player scored for"
+        tests:
+          - not_null
+
+      - name: GOALS_SCORED
+        description: "Total goals"
+        tests:
+          - not_null
+
+  - name: dim_group_standings
+    description: "One row per team showing current group stage standing"
+    columns:
+      - name: TEAM_ID
+        description: "Unique team ID from football-data.org"
+        tests:
+          - not_null
+          - unique
+
+      - name: TEAM_NAME
+        description: "Team name"
+        tests:
+          - not_null
+
+      - name: GROUP_NAME
+        description: "World Cup group"
+        tests:
+          - not_null
+
+      - name: POSITION
+        description: "Current position within group"
+        tests:
+          - not_null
+
+      - name: POINTS
+        description: "Current points total"
+        tests:
+          - not_null
+
+  - name: dim_third_place_standings
+    description: "One row per third place team ranked by FIFA"
+    columns:
+      - name: TEAM_ID
+        description: "Unique team ID from football-data.org"
+        tests:
+          - not_null
+          - unique
+
+      - name: TEAM_NAME
+        description: "Team name"
+        tests:
+          - not_null
+
+      - name: POINTS
+        description: "Points accumulated in group stage"
+        tests:
+          - not_null
+
+  - name: dim_team_stats
+    description: "One row per team showing aggregated match stats"
+    columns:
+      - name: TEAM_ID
+        description: "Unique team ID from football-data.org"
+        tests:
+          - not_null
+          - unique
+
+      - name: TEAM_NAME
+        description: "Team name"
+        tests:
+          - not_null
+
+      - name: TOTAL_GAMES
+        description: "Total finished matches played"
+        tests:
+          - not_null
+
+      - name: WIN_PERCENTAGE
+        description: "Percentage of finished matches won"
+
+      - name: GOALS_PER_GAME
+        description: "Average goals scored per finished match"
+
+      - name: GOALS_CONCEDED_PER_GAME
+        description: "Average goals conceded per finished match"

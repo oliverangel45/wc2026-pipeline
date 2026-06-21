@@ -36,8 +36,8 @@ scorers_to_teams AS (
     SELECT
         g.PLAYER_NAME,
         g.TEAM_NAME,
-        g.GOALS_SCORED,
-        -- g.OWN_GOALS,
+        g.GOALS_SCORED - g.OWN_GOALS AS GOALS_SCORED,
+        g.OWN_GOALS,
         g.PENALTIES,
         g.NORMAL_GOALS,
         t.FLAG,
