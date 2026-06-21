@@ -1,0 +1,49 @@
+TEAM_ID,TEAM_NAME,COUNTRY_CODE,FLAG,CONFEDERATION,GROUP_NAME
+769,Mexico,MEX,🇲🇽,CONCACAF,Group A
+772,South Korea,KOR,🇰🇷,AFC,Group A
+798,Czechia,CZE,🇨🇿,UEFA,Group A
+774,South Africa,RSA,🇿🇦,CAF,Group A
+788,Switzerland,SUI,🇨🇭,UEFA,Group B
+828,Canada,CAN,🇨🇦,CONCACAF,Group B
+8030,Qatar,QAT,🇶🇦,AFC,Group B
+1060,Bosnia-Herzegovina,BIH,🇧🇦,UEFA,Group B
+764,Brazil,BRA,🇧🇷,CONMEBOL,Group C
+836,Haiti,HAI,🇭🇹,CONCACAF,Group C
+815,Morocco,MAR,🇲🇦,CAF,Group C
+8873,Scotland,SCO,🏴󠁧󠁢󠁳󠁣󠁴󠁿,UEFA,Group C
+779,Australia,AUS,🇦🇺,AFC,Group D
+761,Paraguay,PAR,🇵🇾,CONMEBOL,Group D
+803,Turkey,TUR,🇹🇷,UEFA,Group D
+771,United States,USA,🇺🇸,CONCACAF,Group D
+9460,Curaçao,CUW,🇨🇼,CONCACAF,Group E
+759,Germany,GER,🇩🇪,UEFA,Group E
+791,Ecuador,ECU,🇪🇨,CONMEBOL,Group E
+1935,Ivory Coast,CIV,🇨🇮,CAF,Group E
+766,Japan,JPN,🇯🇵,AFC,Group F
+8601,Netherlands,NED,🇳🇱,UEFA,Group F
+792,Sweden,SWE,🇸🇪,UEFA,Group F
+802,Tunisia,TUN,🇹🇳,CAF,Group F
+825,Egypt,EGY,🇪🇬,CAF,Group G
+805,Belgium,BEL,🇧🇪,UEFA,Group G
+840,Iran,IRN,🇮🇷,AFC,Group G
+783,New Zealand,NZL,🇳🇿,OFC,Group G
+1930,Cape Verde Islands,CPV,🇨🇻,CAF,Group H
+801,Saudi Arabia,KSA,🇸🇦,AFC,Group H
+760,Spain,ESP,🇪🇸,UEFA,Group H
+758,Uruguay,URY,🇺🇾,CONMEBOL,Group H
+773,France,FRA,🇫🇷,UEFA,Group I
+8062,Iraq,IRQ,🇮🇶,AFC,Group I
+8872,Norway,NOR,🇳🇴,UEFA,Group I
+804,Senegal,SEN,🇸🇳,CAF,Group I
+778,Algeria,ALG,🇩🇿,CAF,Group J
+762,Argentina,ARG,🇦🇷,CONMEBOL,Group J
+8049,Jordan,JOR,🇯🇴,AFC,Group J
+816,Austria,AUT,🇦🇹,UEFA,Group J
+1934,Congo DR,COD,🇨🇩,CAF,Group K
+818,Colombia,COL,🇨🇴,CONMEBOL,Group K
+765,Portugal,POR,🇵🇹,UEFA,Group K
+8070,Uzbekistan,UZB,🇺🇿,AFC,Group K
+770,England,ENG,🏴󠁧󠁢󠁥󠁮󠁧󠁿,UEFA,Group L
+763,Ghana,GHA,🇬🇭,CAF,Group L
+799,Croatia,CRO,🇭🇷,UEFA,Group L
+1836,Panama,PAN,🇵🇦,CONCACAF,Group L

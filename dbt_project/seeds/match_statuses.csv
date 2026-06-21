@@ -1,0 +1,9 @@
+STATUS,LABEL,IS_LIVE,IS_FINISHED,IS_SCHEDULED
+SCHEDULED,Scheduled,false,false,true
+TIMED,Upcoming,false,false,true
+IN_PLAY,Live,true,false,false
+PAUSED,Half Time,true,false,false
+FINISHED,Finished,false,true,false
+POSTPONED,Postponed,false,false,false
+CANCELLED,Cancelled,false,false,false
+AWARDED,Awarded,false,true,false
