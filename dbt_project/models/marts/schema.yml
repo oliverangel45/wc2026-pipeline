@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: fct_match_results
+    description: "one row per match showing current state"
+    columns:
+      - name: MATCH_ID
+        description: "Unique match ID from source football-data.org"
+        tests:
+          - not_null
+          - unique
+      
+      - name: HOME_TEAM
+        description: "Home team name"
+        tests:
+          - not_null
+
+      - name: AWAY_TEAM
+        description: "Away team name"
+        tests:
+          - not_null
+
+      - name: STATUS
+        description: "Current match status"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['SCHEDULED', 'TIMED', 'IN_PLAY', 'PAUSED', 'FINISHED', 'POSTPONED', 'CANCELLED', 'AWARDED']
+
+      - name: KICKOFF_TIME
+        description: "Scheduled kickoff time in UTC"
+        tests:
+          - not_null
+
+      - name: KICKOFF_TIME_BST
+        description: "Scheduled kickoff time converted to British Summer Time"
+        tests:
+          - not_null
+
+      - name: STAGE
+        description: "Tournament stage"
+        tests:
+          - not_null
