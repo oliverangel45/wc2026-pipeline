@@ -3,7 +3,7 @@ FROM python:3.11-slim
 WORKDIR /dbt
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir dbt-core==1.7.4 dbt-snowflake==1.7.4
+RUN pip install --no-cache-dir dbt-core==1.8.7 dbt-snowflake==1.8.4
 
 COPY dbt_project/ .
 
