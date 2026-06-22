@@ -23,3 +23,7 @@ models:
     marts:
       +materialized: incremental
       +schema: ANALYTICS
+      
+seeds:
+  wc2026:
+    +schema: ANALYTICS
