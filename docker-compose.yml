@@ -77,3 +77,19 @@ services:
   #     - "8501:8501"
   #   env_file:
   #     - .env
+
+  dbt:
+    build:
+      context: .
+      dockerfile: dbt_project/Dockerfile
+    container_name: dbt
+    depends_on:
+      broker:
+        condition: service_healthy
+    env_file:
+      - .env
+    command: >
+      sh -c "dbt seed &&
+             dbt run &&
+             dbt test &&
+             dbt source freshness"
