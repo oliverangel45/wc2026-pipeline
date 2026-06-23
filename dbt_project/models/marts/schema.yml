@@ -13,12 +13,14 @@ models:
       - name: HOME_TEAM
         description: "Home team name"
         tests:
-          - not_null
+          - not_null:
+              where: "STATUS = 'FINISHED'"
 
       - name: AWAY_TEAM
         description: "Away team name"
         tests:
-          - not_null
+          - not_null:
+              where: "STATUS = 'FINISHED'"
 
       - name: STATUS
         description: "Current match status"

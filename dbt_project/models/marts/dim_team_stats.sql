@@ -84,12 +84,8 @@ final AS (
     SELECT *
     FROM joined_to_teams
     {% if is_incremental() %}
-    WHERE TEAM_ID NOT IN (SELECT TEAM_ID FROM {{ this }})
-        OR TOTAL_GAMES > (
-            SELECT TOTAL_GAMES
-            FROM {{ this }} existing
-            WHERE existing.TEAM_ID = joined_to_teams.TEAM_ID
-        )
+    WHERE TEAM_NAME NOT IN (SELECT TEAM_NAME FROM {{ this }})
+        OR TOTAL_GAMES > (SELECT MAX(TOTAL_GAMES) FROM {{ this }})
     {% endif %}
 )
 

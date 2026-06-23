@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key-'MATCH_ID'
+        unique_key='MATCH_ID'
     )
 }}
 
@@ -20,7 +20,7 @@ final AS (
         MATCHDAY,
         STAGE,
         KICKOFF_TIME,
-        CONVERT_TIMEZONE('UTC', 'Europe/London', KICKOFF_TIME) AS KICKOFF_TIME_BST,
+        CONVERT_TIMEZONE('Europe/London', KICKOFF_TIME) AS KICKOFF_TIME_BST,
         LAST_UPDATED
     FROM matches
     {% if is_incremental() %}

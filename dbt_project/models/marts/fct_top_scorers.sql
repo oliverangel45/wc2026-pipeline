@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key-'PLAYER_NAME'
+        unique_key='PLAYER_NAME'
     )
 }}
 

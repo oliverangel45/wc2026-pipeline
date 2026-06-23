@@ -17,7 +17,7 @@ final AS (
     SELECT
         TEAM_ID,
         TEAM_NAME,
-        FLAG_EMOJI,
+        FLAG,
         COUNTRY_CODE,
         CONFEDERATION,
         GROUP_NAME,

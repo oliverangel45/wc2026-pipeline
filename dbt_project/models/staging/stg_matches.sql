@@ -1,6 +1,6 @@
 WITH raw_matches AS (
     SELECT *
-    FROM {{ source('wc2026_raw', 'MATCHES') }} # Jinja syntax
+    FROM {{ source('wc2026_raw', 'MATCHES') }}
 ),
 
 deduplicated AS (

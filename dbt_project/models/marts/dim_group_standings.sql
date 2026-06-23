@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key-'TEAM_ID'
+        unique_key='TEAM_ID'
     )
 }}
 
@@ -9,7 +9,7 @@ WITH standings AS (
     SELECT * FROM {{ ref('stg_standings') }}
 ),
 
-stadings_to_teams AS (
+standings_to_teams AS (
     SELECT
         s.TEAM_ID,
         s.TEAM_NAME,
@@ -27,15 +27,15 @@ stadings_to_teams AS (
         t.FLAG,
         t.COUNTRY_CODE,
         t.CONFEDERATION
-    FROM stadings s
+    FROM standings s
     LEFT JOIN {{ ref('teams') }} t ON s.TEAM_ID = t.TEAM_ID
 ),
 
-fianl AS (
+final AS (
     SELECT
         TEAM_ID,
         TEAM_NAME,
-        FLAG_EMOJI,
+        FLAG,
         COUNTRY_CODE,
         CONFEDERATION,
         GROUP_NAME,
@@ -49,7 +49,7 @@ fianl AS (
         GOALS_AGAINST,
         GOAL_DIFF,
         INGESTED_AT 
-    FROM stadings_to_teams
+    FROM standings_to_teams
     -- Incremental Logic
     {% if is_incremental() %}
     WHERE INGESTED_AT > (SELECT MAX(INGESTED_AT) FROM {{ this }})
