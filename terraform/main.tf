@@ -139,6 +139,15 @@ resource "snowflake_grant_privileges_to_account_role" "transformer_analytics_sch
   }
 }
 
+resource "snowflake_grant_privileges_to_account_role" "transformer_create_schema_on_db" {
+  account_role_name = snowflake_account_role.transformer.name
+  privileges        = ["CREATE SCHEMA"]
+  on_account_object {
+    object_type = "DATABASE"
+    object_name = snowflake_database.wc2026.name
+  }
+}
+
 # TABLES
 
 resource "snowflake_table" "raw_matches" {
