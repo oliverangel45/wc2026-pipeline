@@ -19,13 +19,13 @@ sources:
           error_after: {count: 30, period: minute}
 
       - name: STANDINGS
-        description: "Raw standings data"
+        description: "Raw standings data - one row per team per poll"
         freshness:
-          warn_after: {count: 10, period: minute}
-          error_after: {count: 60, period: minute}
+          warn_after: {count: 15, period: minute}
+          error_after: {count: 120, period: minute}
 
       - name: EVENTS
-        description: "Raw events data"
+        description: "Raw match events - goals, cards, substitutions"
         freshness: # Looser thresholds as there might not be any live matches therefore no match events
-          warn_after: {count: 6, period: hour}
-          error_after: {count: 24, period: hour}
+          warn_after: {count: 60, period: minute}
+          error_after: {count: 360, period: minute}

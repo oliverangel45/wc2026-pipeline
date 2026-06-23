@@ -89,8 +89,8 @@ def send_standing(producer, group_name, team_standing):
 def main():
     logger.info("Starting standings producer")
     
-    logger.info("Waiting 30 seconds before first poll to avoid API rate limiting")
-    time.sleep(30)
+    logger.info("Waiting 60 seconds before first poll to avoid API rate limiting")
+    time.sleep(60)
     
     producer = create_producer()
     
