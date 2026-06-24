@@ -10,7 +10,7 @@ on:
 
 jobs:
   dbt_build:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
