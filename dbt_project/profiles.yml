@@ -3,6 +3,7 @@ wc2026:
   outputs:
     dev:
       type: snowflake
+      organization_name: "{{ env_var('SNOWFLAKE_ORGANIZATION') }}"
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
       user: "{{ env_var('SNOWFLAKE_USER') }}"
       password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
