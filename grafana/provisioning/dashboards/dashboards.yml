@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: WC2026
+    orgId: 1
+    folder: WC2026
+    type: file
+    disableDeletion: true
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards

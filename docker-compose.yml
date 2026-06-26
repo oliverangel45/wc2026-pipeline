@@ -63,20 +63,6 @@ services:
         condition: service_healthy
     env_file:
       - .env
-  
-  # Will replace with grafana eventually
-  # streamlit:
-  #   build:
-  #     context: .
-  #     dockerfile: streamlit_app/Dockerfile
-  #   container_name: streamlit
-  #   depends_on:
-  #     broker:
-  #       condition: service_healthy
-  #   ports:
-  #     - "8501:8501"
-  #   env_file:
-  #     - .env
 
   dbt:
     build:
@@ -88,8 +74,21 @@ services:
         condition: service_healthy
     env_file:
       - .env
-    command: >
-      sh -c "dbt seed &&
-             dbt run &&
-             dbt test &&
-             dbt source freshness"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_INSTALL_PLUGINS: grafana-snowflake-datasource
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      broker:
+        condition: service_healthy

@@ -1,0 +1,16 @@
+apiVersion: 1
+
+datasources:
+  - name: Snowflake
+    type: grafana-snowflake-datasource
+    access: proxy
+    isDefault: true
+    jsonData:
+      account: ${SNOWFLAKE_ACCOUNT}
+      username: ${SNOWFLAKE_USER}
+      role: ${SNOWFLAKE_DBT_ROLE}
+      warehouse: ${SNOWFLAKE_WAREHOUSE}
+      database: ${SNOWFLAKE_DATABASE}
+      schema: ANALYTICS_ANALYTICS
+    secureJsonData:
+      password: ${SNOWFLAKE_PASSWORD}
