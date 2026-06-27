@@ -84,7 +84,7 @@ Resources provisioned:
 - Three raw tables: `MATCHES`, `STANDINGS`, `EVENTS` — each with structured columns and a `VARIANT` `RAW_PAYLOAD` column storing the complete API response
 ---
  
-## dbt models (to-do)
+## dbt models
  
 ```
 RAW schema (Snowflake, written by consumer)
@@ -104,11 +104,25 @@ Source freshness checks are configured on all three raw tables. dbt tests cover 
  
 ---
  
-## CI/CD (to-do)
+## CI/CD
  
 A GitHub Actions workflow runs `dbt build` on every push to `main`, validating all models, tests, and seeds against the Snowflake ANALYTICS schema. No manual dbt runs are required for validation.
  
 ---
+
+## Known Limitations
+
+**In-memory event deduplication**
+The matches/events producer tracks which finished matches have had their events fetched using a Python set stored in memory. If the producer container restarts, this set resets and events for finished matches will be re-fetched once before being added to the set again. This may result in a small number of duplicate event rows in `RAW.EVENTS`. The dbt deduplication logic in `stg_events` handles these duplicates cleanly via `ROW_NUMBER()` partitioned on `EVENT_ID`.
+
+**Manual Snowflake bootstrapping steps**
+Two Snowflake grants could not be provisioned via Terraform due to personal account limitations — granting roles to the user and `CREATE SCHEMA` on the database. These were applied manually via SQL. In a production Snowflake account managed by an administrator these would be handled entirely by Terraform. The exact SQL statements required are documented in the setup instructions below.
+
+**Grafana Snowflake plugin**
+The official Grafana Snowflake datasource plugin requires an Enterprise licence for self-managed instances. The community plugin (`michelin-snowflake-datasource`) was used instead. This plugin does not support image rendering in table columns, meaning team crest images cannot be displayed. A future iteration would use Streamlit or Evidence.dev for richer visual formatting.
+
+**Kafka topics created on first message**
+Kafka topics `wc.matches`, `wc.standings`, and `wc.events` are created automatically when the first message is produced rather than being pre-created. In a production environment topics would be pre-created with explicit partition and replication settings.
  
 ## Running the pipeline
  
@@ -118,17 +132,44 @@ A GitHub Actions workflow runs `dbt build` on every push to `main`, validating a
 - Snowflake account
 - football-data.org API key
 - Terraform (v1.7+)
+
+> **Note:** Two manual SQL steps are required after `terraform apply` due to personal Snowflake account limitations. Run these in a Snowflake worksheet:
+> ```sql
+> USE ROLE ACCOUNTADMIN;
+> GRANT ROLE LOADER TO USER your_username;
+> GRANT ROLE TRANSFORMER TO USER your_username;
+> GRANT CREATE SCHEMA ON DATABASE WC2026 TO ROLE TRANSFORMER;
+> ```
+
 ### Setup
- 
+
 ```bash
 git clone https://github.com/oliverangel45/wc2026-pipeline.git
 cd wc2026-pipeline
 cp .env.example .env
-# fill in .env with your credentials
+# fill in .env with your Snowflake credentials, API key
+# SNOWFLAKE_ACCOUNT should be the full identifier e.g. ORGNAME-ACCOUNTNAME
 ```
  
 ### Provision Snowflake infrastructure
- 
+
+Load environment variables into your terminal session first:
+
+```powershell
+# Windows PowerShell
+Get-Content .env | Where-Object { $_ -notmatch '^#' -and $_ -match '=' } | ForEach-Object {
+  $name, $value = $_ -split '=', 2
+  [System.Environment]::SetEnvironmentVariable($name, $value, 'Process')
+}
+```
+
+```bash
+# Mac/Linux
+export $(grep -v '^#' .env | xargs)
+```
+
+Then provision:
+
 ```bash
 cd terraform
 terraform init
@@ -137,14 +178,17 @@ terraform apply
 ```
  
 ### Start the pipeline
- 
+
 ```bash
 docker compose up --build
 ```
- 
-This starts the Kafka broker, both producers, the consumer, and Grafana. The dashboard is available at `http://localhost:3000`.
- 
----
+
+This starts the Kafka broker, both producers, the consumer, dbt, Grafana, and Streamlit.
+
+- Grafana dashboard: `http://localhost:3000` (admin/admin)
+- Streamlit dashboard: `http://localhost:8501`
+
+dbt runs automatically on startup — seeding reference data, building all models, and running all 46 tests.
  
 ## Personal reflection
  
@@ -157,15 +201,3 @@ The biggest new addition over my first portfolio project was Terraform. I had no
 Managing three Kafka topics simultaneously introduced a level of architectural complexity I hadn't dealt with in previous projects (1-2 topics maximum). Designing the routing logic in the consumer, handling the different polling intervals across producers, and thinking through what happens when one topic has messages and another doesn't were all genuinely enjoyable engineering problems to try and solve.
  
 ---
- 
-## Status
- 
-| Component | Status |
-|---|---|
-| Terraform infrastructure | Complete |
-| Kafka producers | Complete |
-| Kafka consumer | Complete |
-| dbt models | In progress |
-| Grafana dashboard | In progress |
-| GitHub Actions CI | In progress |
- 
