@@ -127,6 +127,8 @@ def main():
     while True:
         try:
             matches = fetch_matches()
+            finished_fetched_this_poll = 0
+            MAX_EVENT_FETCHES_PER_POLL = 5
 
             for match in matches:
                 send_match(producer, match)
@@ -134,16 +136,19 @@ def main():
                 match_id = match['id']
                 status = match['status']
 
-                if match['status'] in ['IN_PLAY', 'PAUSED']: # Removed 'FINISHED' matches sue to API polling limits
+                if status in ['IN_PLAY', 'PAUSED']:
+                    time.sleep(8)
                     events = fetch_events(match_id)
                     send_events(producer, match_id, events)
-                    time.sleep(1)
                     
                 elif status == 'FINISHED' and match_id not in fetched_event_match_ids:
+                    if finished_fetched_this_poll >= MAX_EVENT_FETCHES_PER_POLL:
+                        continue
+                    time.sleep(8)
                     events = fetch_events(match_id)
                     send_events(producer, match_id, events)
                     fetched_event_match_ids.add(match_id)
-                    time.sleep(1)
+                    finished_fetched_this_poll += 1
 
             producer.flush()
             logger.info(f"Poll complete. Sleeping for {POLL_INTERVAL} seconds")

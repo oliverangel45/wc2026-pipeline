@@ -93,3 +93,17 @@ services:
     depends_on:
       broker:
         condition: service_healthy
+  
+  # Adding Streamlit adpp, as Grafana does not give all that I would like in terms of UI
+  streamlit:
+    build:
+      context: .
+      dockerfile: streamlit_app/Dockerfile
+    container_name: streamlit
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    depends_on:
+      broker:
+        condition: service_healthy
