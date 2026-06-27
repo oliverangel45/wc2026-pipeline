@@ -1,0 +1,1440 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "annotations": {
+    "list": []
+  },
+  "editable": false,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group A",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group A' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group B",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group B' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group C",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group C' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 10
+      },
+      "id": 4,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group D",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group D' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 10
+      },
+      "id": 5,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group E",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group E' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 10
+      },
+      "id": 6,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group F",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group F' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 20
+      },
+      "id": 7,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group G",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group G' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 20
+      },
+      "id": 8,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group H",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group H' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 20
+      },
+      "id": 9,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group I",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group I' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 30
+      },
+      "id": 10,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group J",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group J' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 30
+      },
+      "id": 11,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group K",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group K' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713"
+                      },
+                      "THIRD": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "?"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 2,
+                        "text": "\u2717"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 30
+      },
+      "id": 12,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Group L",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS Team, CASE WHEN POSITION <= 2 THEN 'ADVANCES' WHEN POSITION = 3 THEN 'THIRD' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_group_standings WHERE GROUP_NAME = 'Group L' ORDER BY POSITION ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "POINTS"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "grey",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "QUALIFICATION"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ADVANCES": {
+                        "color": "blue",
+                        "index": 0,
+                        "text": "\u2713 Advances"
+                      },
+                      "ELIMINATED": {
+                        "color": "red",
+                        "index": 1,
+                        "text": "\u2717 Out"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "id": 13,
+      "options": {
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "title": "Best Third Place Teams (Top 8 Advance)",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME AS TEAM, CASE WHEN ROW_NUMBER() OVER (ORDER BY POINTS DESC, GOAL_DIFF DESC, GOALS_FOR DESC) <= 8 THEN 'ADVANCES' ELSE 'ELIMINATED' END AS QUALIFICATION, PLAYED_GAMES AS MP, WON AS W, DRAW AS D, LOST AS L, POINTS AS P, GOAL_DIFF AS GD FROM WC2026.ANALYTICS_ANALYTICS.dim_third_place_standings ORDER BY POINTS DESC, GOAL_DIFF DESC, GOALS_FOR DESC LIMIT 12;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    }
+  ],
+  "refresh": "5m",
+  "schemaVersion": 38,
+  "tags": [
+    "wc2026",
+    "standings"
+  ],
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Group Standings",
+  "uid": "wc2026-group-standings",
+  "version": 1
+}

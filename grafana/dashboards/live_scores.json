@@ -1,0 +1,236 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "annotations": {
+    "list": []
+  },
+  "editable": false,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Live Matches",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT COUNT(*) AS live_matches FROM WC2026.ANALYTICS_ANALYTICS.fct_match_results WHERE STATUS IN ('IN_PLAY', 'PAUSED');",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Matches Played",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT COUNT(*) AS matches_played FROM WC2026.ANALYTICS_ANALYTICS.fct_match_results WHERE STATUS = 'FINISHED';",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Total Goals Scored",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT SUM(HOME_SCORE + AWAY_SCORE) AS total_goals FROM WC2026.ANALYTICS_ANALYTICS.fct_match_results WHERE STATUS = 'FINISHED';",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "id": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Upcoming Fixtures",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT COUNT(*) AS upcoming FROM WC2026.ANALYTICS_ANALYTICS.fct_match_results WHERE STATUS IN ('SCHEDULED', 'TIMED');",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "STATUS" },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  { "options": { "IN_PLAY": { "color": "green", "index": 0, "text": "LIVE" } }, "type": "value" },
+                  { "options": { "PAUSED": { "color": "yellow", "index": 1, "text": "HT" } }, "type": "value" },
+                  { "options": { "FINISHED": { "color": "blue", "index": 2, "text": "FT" } }, "type": "value" },
+                  { "options": { "SCHEDULED": { "color": "grey", "index": 3, "text": "SCH" } }, "type": "value" },
+                  { "options": { "TIMED": { "color": "grey", "index": 4, "text": "TBD" } }, "type": "value" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 16, "w": 24, "x": 0, "y": 4 },
+      "id": 5,
+      "options": {
+        "footer": { "show": false },
+        "showHeader": true,
+        "sortBy": [{ "desc": false, "displayName": "KICKOFF_TIME_BST" }]
+      },
+      "title": "Match Scores and Fixtures",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT HOME_TEAM, HOME_SCORE, AWAY_SCORE, AWAY_TEAM, STATUS, STAGE, TO_CHAR(KICKOFF_TIME_BST, 'DD Mon YYYY HH24:MI') AS KICKOFF_TIME_BST FROM WC2026.ANALYTICS_ANALYTICS.fct_match_results ORDER BY KICKOFF_TIME_BST ASC;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 38,
+  "tags": ["wc2026", "live"],
+  "time": { "from": "now-7d", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Live Scores",
+  "uid": "wc2026-live-scores",
+  "version": 1
+}

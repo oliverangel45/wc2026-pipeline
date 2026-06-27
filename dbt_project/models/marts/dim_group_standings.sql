@@ -24,7 +24,7 @@ standings_to_teams AS (
         s.GOALS_AGAINST,
         s.GOAL_DIFF,
         s.INGESTED_AT,
-        t.FLAG,
+        s.CREST_URL,
         t.COUNTRY_CODE,
         t.CONFEDERATION
     FROM standings s
@@ -35,7 +35,7 @@ final AS (
     SELECT
         TEAM_ID,
         TEAM_NAME,
-        FLAG,
+        CREST_URL,
         COUNTRY_CODE,
         CONFEDERATION,
         GROUP_NAME,

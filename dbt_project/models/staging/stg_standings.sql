@@ -26,6 +26,7 @@ final AS (
         GOALS_FOR,
         GOALS_AGAINST,
         GOAL_DIFF,
+        RAW_PAYLOAD:raw_payload:team:crest::STRING AS CREST_URL,
         INGESTED_AT
     FROM deduplicated
     WHERE row_num = 1

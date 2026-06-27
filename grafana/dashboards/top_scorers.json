@@ -1,0 +1,262 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "annotations": { "list": [] },
+  "editable": false,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Total Goals Scored",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT SUM(GOALS_SCORED) AS total_goals FROM WC2026.ANALYTICS_ANALYTICS.fct_top_scorers;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Players on Scoresheet",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT COUNT(DISTINCT PLAYER_NAME) AS scorers FROM WC2026.ANALYTICS_ANALYTICS.fct_top_scorers WHERE GOALS_SCORED > 0;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Own Goals",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT SUM(OWN_GOALS) AS own_goals FROM WC2026.ANALYTICS_ANALYTICS.fct_top_scorers;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "id": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Penalties Scored",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT SUM(PENALTIES) AS penalties FROM WC2026.ANALYTICS_ANALYTICS.fct_top_scorers;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "GOALS_SCORED" },
+            "properties": [
+              { "id": "custom.displayMode", "value": "lcd-gauge" },
+              { "id": "min", "value": 0 },
+              { "id": "max", "value": 10 },
+              { "id": "custom.width", "value": 200 }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "FLAG" },
+            "properties": [
+              { "id": "custom.width", "value": 60 }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 20, "w": 14, "x": 0, "y": 4 },
+      "id": 5,
+      "options": {
+        "footer": { "show": false },
+        "showHeader": true,
+        "sortBy": [{ "desc": true, "displayName": "GOALS_SCORED" }]
+      },
+      "title": "Golden Boot Rankings",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT PLAYER_NAME, TEAM_NAME, GOALS_SCORED, NORMAL_GOALS, PENALTIES, OWN_GOALS FROM WC2026.ANALYTICS_ANALYTICS.fct_top_scorers ORDER BY GOALS_SCORED DESC LIMIT 20;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 20, "w": 10, "x": 14, "y": 4 },
+      "id": 6,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.7,
+        "fillOpacity": 80,
+        "gradientMode": "none",
+        "legend": { "displayMode": "hidden", "placement": "bottom" },
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": { "group": "A", "mode": "none" },
+        "tooltip": { "mode": "single", "sort": "none" },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 200
+      },
+      "title": "Top 10 Scorers Chart",
+      "type": "barchart",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT PLAYER_NAME, GOALS_SCORED FROM WC2026.ANALYTICS_ANALYTICS.fct_top_scorers ORDER BY GOALS_SCORED DESC LIMIT 10;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 38,
+  "tags": ["wc2026", "scorers"],
+  "time": { "from": "now-7d", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Top Scorers",
+  "uid": "wc2026-top-scorers",
+  "version": 1
+}

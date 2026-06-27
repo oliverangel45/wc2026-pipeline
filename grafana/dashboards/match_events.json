@@ -1,0 +1,303 @@
+{
+  "__inputs": [],
+  "__requires": [],
+  "annotations": { "list": [] },
+  "editable": false,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Total Goals",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT COUNT(*) AS total_goals FROM WC2026.ANALYTICS_ANALYTICS.stg_events WHERE EVENT_TYPE = 'GOAL' AND EVENT_DETAIL != 'OWN_GOAL';",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "yellow", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "id": 2,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Yellow Cards",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT COUNT(*) AS yellow_cards FROM WC2026.ANALYTICS_ANALYTICS.stg_events WHERE EVENT_TYPE = 'YELLOW_CARD';",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Red Cards",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT COUNT(*) AS red_cards FROM WC2026.ANALYTICS_ANALYTICS.stg_events WHERE EVENT_TYPE IN ('RED_CARD', 'YELLOW_RED_CARD');",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "blue", "value": null }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "id": 4,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "title": "Substitutions",
+      "type": "stat",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT COUNT(*) AS substitutions FROM WC2026.ANALYTICS_ANALYTICS.stg_events WHERE EVENT_TYPE = 'SUBSTITUTION';",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "auto"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "EVENT_TYPE" },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  { "options": { "GOAL": { "color": "green", "index": 0, "text": "⚽ GOAL" } }, "type": "value" },
+                  { "options": { "YELLOW_CARD": { "color": "yellow", "index": 1, "text": "🟨 YELLOW" } }, "type": "value" },
+                  { "options": { "RED_CARD": { "color": "red", "index": 2, "text": "🟥 RED" } }, "type": "value" },
+                  { "options": { "YELLOW_RED_CARD": { "color": "orange", "index": 3, "text": "🟧 2ND YELLOW" } }, "type": "value" },
+                  { "options": { "SUBSTITUTION": { "color": "blue", "index": 4, "text": "🔄 SUB" } }, "type": "value" }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "MINUTE" },
+            "properties": [
+              { "id": "custom.width", "value": 80 }
+            ]
+          }
+        ]
+      },
+      "gridPos": { "h": 20, "w": 24, "x": 0, "y": 4 },
+      "id": 5,
+      "options": {
+        "footer": { "show": false },
+        "showHeader": true,
+        "sortBy": [
+          { "desc": true, "displayName": "MINUTE" }
+        ]
+      },
+      "title": "Match Events Timeline",
+      "type": "table",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT e.MINUTE, e.EXTRA_TIME_MINUTE, e.EVENT_TYPE, e.EVENT_DETAIL, e.TEAM_NAME, e.PLAYER_NAME, e.ASSIST_NAME, m.HOME_TEAM, m.AWAY_TEAM, m.HOME_SCORE, m.AWAY_SCORE FROM WC2026.ANALYTICS_ANALYTICS.stg_events e LEFT JOIN WC2026.ANALYTICS_ANALYTICS.fct_match_results m ON e.MATCH_ID = m.MATCH_ID ORDER BY e.MINUTE DESC LIMIT 100;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "green",
+            "mode": "fixed"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 12, "w": 12, "x": 0, "y": 24 },
+      "id": 6,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.7,
+        "fillOpacity": 80,
+        "gradientMode": "none",
+        "legend": { "displayMode": "hidden", "placement": "bottom" },
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": { "group": "A", "mode": "none" },
+        "tooltip": { "mode": "single", "sort": "none" }
+      },
+      "title": "Goals by Team",
+      "type": "barchart",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME, COUNT(*) AS goals FROM WC2026.ANALYTICS_ANALYTICS.stg_events WHERE EVENT_TYPE = 'GOAL' AND EVENT_DETAIL != 'OWN_GOAL' GROUP BY TEAM_NAME ORDER BY goals DESC LIMIT 15;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    },
+    {
+      "datasource": "Snowflake",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "yellow",
+            "mode": "fixed"
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 12, "w": 12, "x": 12, "y": 24 },
+      "id": 7,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.7,
+        "fillOpacity": 80,
+        "gradientMode": "none",
+        "legend": { "displayMode": "hidden", "placement": "bottom" },
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": { "group": "A", "mode": "none" },
+        "tooltip": { "mode": "single", "sort": "none" }
+      },
+      "title": "Yellow Cards by Team",
+      "type": "barchart",
+      "targets": [
+        {
+          "datasource": "Snowflake",
+          "queryText": "SELECT TEAM_NAME, COUNT(*) AS yellow_cards FROM WC2026.ANALYTICS_ANALYTICS.stg_events WHERE EVENT_TYPE = 'YELLOW_CARD' GROUP BY TEAM_NAME ORDER BY yellow_cards DESC LIMIT 15;",
+          "refId": "A",
+          "format": "table"
+        }
+      ]
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 38,
+  "tags": ["wc2026", "events"],
+  "time": { "from": "now-7d", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Match Events",
+  "uid": "wc2026-match-events",
+  "version": 1
+}
