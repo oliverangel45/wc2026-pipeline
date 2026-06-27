@@ -7,3 +7,4 @@ FINISHED,Finished,false,true,false
 POSTPONED,Postponed,false,false,false
 CANCELLED,Cancelled,false,false,false
 AWARDED,Awarded,false,true,false
+LIVE,Live,true,false,false

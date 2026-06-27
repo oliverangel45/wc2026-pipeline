@@ -38,7 +38,7 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['SCHEDULED', 'TIMED', 'IN_PLAY', 'PAUSED', 'FINISHED', 'POSTPONED', 'CANCELLED', 'AWARDED']
+              values: ['SCHEDULED', 'TIMED', 'IN_PLAY', 'LIVE', 'PAUSED', 'FINISHED', 'POSTPONED', 'CANCELLED', 'AWARDED']
   
   - name: stg_standings
     description: "Deduplicated standings data (one row per team with current position)"

@@ -74,6 +74,14 @@ services:
         condition: service_healthy
     env_file:
       - .env
+    command: >
+      sh -c "dbt seed &&
+            dbt run &&
+            dbt test &&
+            while true; do
+              sleep 60 &&
+              dbt run --select fct_match_results dim_group_standings dim_third_place_standings fct_top_scorers dim_team_stats;
+            done"
 
   grafana:
     image: grafana/grafana:latest

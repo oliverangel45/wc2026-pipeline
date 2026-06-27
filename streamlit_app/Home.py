@@ -44,7 +44,7 @@ try:
         SELECT MATCH_ID, HOME_TEAM, AWAY_TEAM, HOME_SCORE, AWAY_SCORE, STATUS, STAGE, MATCHDAY,
                TO_CHAR(KICKOFF_TIME_BST, 'DD Mon · HH24:MI') AS KICKOFF_BST
         FROM WC2026.ANALYTICS_ANALYTICS.fct_match_results
-        WHERE STATUS IN ('IN_PLAY', 'PAUSED')
+        WHERE STATUS IN ('IN_PLAY', 'PAUSED', 'LIVE')
         ORDER BY KICKOFF_TIME_BST DESC
     """)
     live_matches = [dict(zip(cols, r)) for r in rows]
@@ -55,7 +55,8 @@ except Exception as e:
 try:
     cols, rows = run_query("""
         SELECT MATCH_ID, HOME_TEAM, AWAY_TEAM, STATUS, STAGE, MATCHDAY,
-               TO_CHAR(KICKOFF_TIME_BST, 'DD Mon · HH24:MI') AS KICKOFF_BST
+               TO_CHAR(KICKOFF_TIME_BST, 'DD Mon · HH24:MI') AS KICKOFF_BST,
+               TO_CHAR(KICKOFF_TIME_BST, 'DD Mon YYYY') AS MATCH_DATE
         FROM WC2026.ANALYTICS_ANALYTICS.fct_match_results
         WHERE STATUS IN ('SCHEDULED', 'TIMED')
         ORDER BY KICKOFF_TIME_BST ASC
@@ -158,27 +159,59 @@ st.markdown(f"""
 
 if upcoming_matches:
     upcoming_html = ""
+    current_date = None
     for m in upcoming_matches:
-        home_flag = flag_img(m['HOME_TEAM'], 18)
-        away_flag = flag_img(m['AWAY_TEAM'], 18)
+        # Extract date from KICKOFF_BST for grouping
+        match_date = m['MATCH_DATE']
+        if match_date != current_date:
+            current_date = match_date
+            upcoming_html += f'<div style="font-size:11px;font-weight:600;color:#7B91B0;text-transform:uppercase;letter-spacing:0.2em;padding:12px 4px 8px;">{match_date.upper()}</div>'
+        code_home = FLAG_CODES.get(m['HOME_TEAM'], 'un')
+        code_away = FLAG_CODES.get(m['AWAY_TEAM'], 'un')
+        home_flag = f'<img src="https://flagcdn.com/w40/{code_home}.png" height="18" style="border-radius:2px;object-fit:cover;" />'
+        away_flag = f'<img src="https://flagcdn.com/w40/{code_away}.png" height="18" style="border-radius:2px;object-fit:cover;" />'
+        # Extract just the time portion
+        time_only = m['KICKOFF_BST'].split('·')[1].strip() if '·' in m['KICKOFF_BST'] else m['KICKOFF_BST']
         upcoming_html += f"""
-        <div class="upcoming-row">
-            <span class="upcoming-time">{m['KICKOFF_BST']} BST</span>
-            <div class="match-teams">
-                <div class="match-home">
-                    <span class="match-team-name">{m['HOME_TEAM']}</span>
+        <div style="background:#0C1B30;border:1px solid rgba(255,255,255,0.07);border-radius:8px;
+            padding:12px 16px;display:flex;align-items:center;gap:16px;margin-bottom:6px;opacity:0.85;">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
+                color:#D4A931;width:80px;flex-shrink:0;">{time_only} BST</span>
+            <div style="flex:1;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;">
+                <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+                    <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
+                        letter-spacing:0.08em;text-transform:uppercase;">{m['HOME_TEAM']}</span>
                     {home_flag}
                 </div>
-                <span class="upcoming-vs">vs</span>
-                <div class="match-away">
+                <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:14px;
+                    color:#7B91B0;">vs</span>
+                <div style="display:flex;align-items:center;gap:8px;">
                     {away_flag}
-                    <span class="match-team-name">{m['AWAY_TEAM']}</span>
+                    <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;
+                        letter-spacing:0.08em;text-transform:uppercase;">{m['AWAY_TEAM']}</span>
                 </div>
             </div>
-            <span class="match-group">MD {m.get('MATCHDAY','')}</span>
+            <span style="font-size:11px;color:#7B91B0;width:64px;text-align:right;flex-shrink:0;">MD {m.get('MATCHDAY','')}</span>
         </div>
         """
-    st.markdown(upcoming_html, unsafe_allow_html=True)
+
+    full_iframe_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    body {{ background: transparent; font-family: 'Inter', sans-serif; color: #EDF2FF; }}
+    </style>
+    </head>
+    <body>
+    {upcoming_html}
+    </body>
+    </html>
+    """
+    components.html(full_iframe_html, height=len(upcoming_matches) * 54 + 60, scrolling=False)
 else:
     st.markdown(f"""
     <div style="color:{THEME['muted_fg']};font-size:13px;padding:16px 0;">

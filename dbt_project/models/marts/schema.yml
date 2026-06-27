@@ -27,7 +27,7 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['SCHEDULED', 'TIMED', 'IN_PLAY', 'PAUSED', 'FINISHED', 'POSTPONED', 'CANCELLED', 'AWARDED']
+              values: ['SCHEDULED', 'TIMED', 'IN_PLAY', 'LIVE', 'PAUSED', 'FINISHED', 'POSTPONED', 'CANCELLED', 'AWARDED']
 
       - name: KICKOFF_TIME
         description: "Scheduled kickoff time in UTC"
