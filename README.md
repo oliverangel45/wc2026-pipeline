@@ -1,4 +1,4 @@
-# WC2026 Data Pipeline 🌍⚽🏆(still in progress)
+# WC2026 Data Pipeline 🌍⚽🏆
  
 A real-time data engineering pipeline built to extract, load, transform (ELT) and visualise live FIFA World Cup 2026 data. The pipeline streams match results, group standings, and match events from the [football-data.org](https://www.football-data.org/) REST API through Apache Kafka into Snowflake, transforms the raw data with dbt, and surfaces it through a Grafana dashboard, all containerised within Docker Compose. 
 
@@ -52,6 +52,16 @@ wc2026-pipeline/
 ├── .github/
 │   └── workflows/
 │       └── dbt_ci.yml               # runs dbt build on push to main
+├── streamlit_app/
+│   ├── Home.py                      # live matches, upcoming fixtures, recent results
+│   ├── utils.py                     # shared styles, Snowflake connection, flag helpers
+│   ├── Dockerfile
+│   └── pages/
+│       ├── 2_Results.py             # all finished matches grouped by date
+│       ├── 3_Groups.py              # 12 group standings tables
+│       ├── 4_Third_Place.py         # best third-placed teams ranking
+│       ├── 5_Scorers.py             # golden boot rankings (unfortunately, events data not available with free tier API)
+│       └── 6_Bracket.py             # constructed tournament knockout bracket 
 ├── docker-compose.yml
 ├── .env.example
 └── requirements.txt
@@ -92,10 +102,11 @@ RAW schema (Snowflake, written by consumer)
     └── stg_standings     (staging, deduplicates on TEAM_ID)
     └── stg_events        (staging, deduplicates on EVENT_ID)
             │
-            ├── fct_match_results      (incremental, one row per match)
-            ├── fct_top_scorers        (incremental, goals by player excl. own goals)
-            ├── dim_group_standings    (latest standing per team per group)
-            └── dim_team_stats         (win rate, goals per game, form)
+            ├── fct_match_results          (incremental, one row per match)
+            ├── fct_top_scorers            (incremental, goals by player excl. own goals)
+            ├── dim_group_standings        (latest standing per team per group)
+            ├── dim_third_place_standings  (best third-placed teams, FIFA tiebreaker ranked)
+            └── dim_team_stats             (win rate, goals per game, form)
 ```
  
 Seeds: `teams.csv` provides team metadata joined into mart models. `match_statuses.csv` feeds `accepted_values` tests on the `STATUS` column.
@@ -106,7 +117,7 @@ Source freshness checks are configured on all three raw tables. dbt tests cover 
  
 ## CI/CD
  
-A GitHub Actions workflow runs `dbt build` on every push to `main`, validating all models, tests, and seeds against the Snowflake ANALYTICS schema. No manual dbt runs are required for validation.
+A GitHub Actions workflow runs `terraform plan` and `dbt build` on every push to `main`, validating all infrastructure configuration and dbt models, tests, and seeds against the Snowflake ANALYTICS schema.
  
 ---
 
@@ -123,6 +134,9 @@ The official Grafana Snowflake datasource plugin requires an Enterprise licence 
 
 **Kafka topics created on first message**
 Kafka topics `wc.matches`, `wc.standings`, and `wc.events` are created automatically when the first message is produced rather than being pre-created. In a production environment topics would be pre-created with explicit partition and replication settings.
+
+**Events data not available on free tier**
+The football-data.org free tier does not return goal, booking, or substitution events from the match detail endpoint. As a result RAW.EVENTS is empty and fct_top_scorers and the match events dashboard show no data. The pipeline architecture correctly supports events ingestion — upgrading to a paid API tier would populate this data automatically without any code changes.
  
 ## Running the pipeline
  
@@ -194,10 +208,14 @@ dbt runs automatically on startup — seeding reference data, building all model
  
 This project idea stemmed from my genuine interest in sports and football, and the 2026 World Cup came at a perfect time to challenge myself building an end-to-end ELT data pipeline with more complexity than my previous weather pipeline project. 
 
-Having a live data source with real events happening every day (goals, upsets, group table shifts) kept me motivated to push through the harder parts of the build rather than settling for a static dataset.
+Having a live data source with real events happening every day (matches, goals, group table shifts) kept me motivated to push through the harder parts of the build.
  
-The biggest new addition over my first portfolio project was Terraform. I had no prior experience with Infrastructure as Code before starting this pipeline. Working through the Snowflake provider documentation, understanding the layered grant model, and debugging provider version mismatches gave me a solid grounding in how Terraform works and why it is the right tool for reproducible infrastructure, even when provisioning a single cloud warehouse rather than a full multi-service platform. I came to genuinely appreciate the discipline of defining infrastructure as code: the ability to destroy and rebuild an identical environment from a single `terraform apply` is something an init script cannot replicate.
+The biggest new addition over my first portfolio project was Terraform. I had no prior experience with 'Infrastructure as Code' before starting this pipeline. Working through the Snowflake provider documentation, understanding the layered grant model, and debugging provider version mismatches gave me a solid grounding in how Terraform works and why it is the right tool for reproducible infrastructure, even when provisioning a single cloud warehouse rather than a full multi-service platform.
  
 Managing three Kafka topics simultaneously introduced a level of architectural complexity I hadn't dealt with in previous projects (1-2 topics maximum). Designing the routing logic in the consumer, handling the different polling intervals across producers, and thinking through what happens when one topic has messages and another doesn't were all genuinely enjoyable engineering problems to try and solve.
+
+Lastly, I decided to build two seperate dashboard layers, Grafana and Streamlit. I had not used Grafana before so I wanted to give this a shot however after intially building a basic dashboard structure, I realised there were limitations in conditional formatting and rendering the flags for each team. Therefore I have kept the Grafana dashboards as part of the repo, but the final dashboards were built using streamlit as it proved far more capable for a sports dashboard where HTML formatting, flag images, and custom visual design were priorities. The Grafana community Snowflake plugin's lack of image rendering support was a genuine production constraint that led directly to building the Streamlit app — which ultimately produced a much better end result.
+
+Encountering and working around real tooling limitations is something I now see as a more valuable learning experience than a project that runs perfectly first time.
  
 ---
